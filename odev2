@@ -1,0 +1,253 @@
+//1.Soru
+using System;
+using System.Collections;
+
+namespace degisken{
+
+    class Program{
+        static void Main(string[] args){
+            ArrayList asal = new ArrayList(); 
+            ArrayList asalOlmayan = new ArrayList();
+            ArrayList sayilar = new ArrayList();
+            int asalSayaci=0, asalOlmayanSayaci=0;
+            int asalOrtalama=0, asalOlmayanOrtalama=0;
+            int asalToplam=0, asalOlmayanToplam=0;
+            
+            Console.WriteLine("Sayilari giriniz");
+            for(int i=0 ; i<20 ; i++){ 
+                try{
+                    int n = Convert.ToInt32(Console.ReadLine());
+                    
+                    if(n <= 0){
+                        Console.WriteLine("Pozitif tam sayı giriniz.");
+                    }
+
+                    else{
+                        sayilar.Add(n);
+                    }
+                }
+                catch (FormatException )
+                {
+                    Console.WriteLine("Veri tipi uygun değil. Girilen deger bir sayi olmalidir.");    
+                }
+            }
+                
+                
+                
+            foreach (var item in sayilar){ 
+                if(asalKontrol(Convert.ToInt32(item))==true){
+                    asal.Add(item);
+                    asalSayaci++;
+                    asalToplam=asalToplam + Convert.ToInt32(item);
+                }
+                else{
+                    asalOlmayan.Add(item);
+                    asalOlmayanSayaci++;
+                    asalOlmayanToplam=asalOlmayanToplam + Convert.ToInt32(item);
+                }
+            }
+
+            asalOrtalama = asalToplam/asalSayaci;
+            asalOlmayanOrtalama = asalOlmayanToplam/asalOlmayanSayaci;
+                
+            asal.Sort();
+            asal.Reverse();
+            asalOlmayan.Sort();
+            asalOlmayan.Reverse();
+
+            Console.Write("Asal Sayilarin büyükten kücüge dogru siralanmasi: "); 
+            foreach (var item in asal)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine(" ");
+            Console.WriteLine("Asal Sayilar dizisinin eleman sayisi:" + asalSayaci);
+            Console.WriteLine("Asal Sayilar dizisinin ortalamasi:" + asalOrtalama);
+
+            Console.Write("Asal Olmayan Sayilarin büyükten kücüge dogru siralanmasi: "); 
+            foreach (var item in asalOlmayan)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine(" ");
+            Console.WriteLine("Asal Olmayan Sayilar dizisinin eleman sayisi:" + asalOlmayanSayaci);
+            Console.WriteLine("Asal Sayilar dizisinin ortalamasi:" + asalOlmayanOrtalama);
+            
+        }
+        public static bool asalKontrol(int sayi){
+            int sayac = 0;
+            bool asal;
+            int i;
+            
+            for(i = 1; i <= sayi; i++)
+            {
+                if (sayi % i == 0)
+                {
+                    sayac++;
+                }
+            }
+
+            if (sayac == 2)
+            {
+                asal = true;
+            }
+
+            else
+            {
+                asal = false;
+            }
+
+            return asal;
+        } 
+    }
+}
+
+//2.Soru
+using System;
+using System.Collections;
+
+namespace degisken{
+
+    class Program{
+        static void Main(string[] args){
+            
+            int[] sayilar = new int[20];
+            int[] enKucukUcSayi = new int[3];
+            int[] enBuyukUcSayi = new int[3];
+            int enKucuklerOrtalama, enKucuklerToplam = 0;
+            int enBuyuklerOrtalama, enBuyuklerToplam= 0;
+
+            for(int i=0; i<20; i++){
+                int n = Convert.ToInt32(Console.ReadLine());
+                sayilar[i] = n;
+            }
+
+            Array.Sort(sayilar);
+            for(int j=0; j<3 ; j++){
+                enKucukUcSayi[j]=sayilar[j];
+                enKucuklerToplam += enKucukUcSayi[j];
+            }
+            Console.WriteLine("En küçük sayılar:" + 
+            enKucukUcSayi[0] + "," + enKucukUcSayi[1] + "," + enKucukUcSayi[2]);
+            
+            
+            Array.Reverse(sayilar);
+            for(int k=0; k<3 ; k++){
+                enBuyukUcSayi[k]=sayilar[k];
+                enBuyuklerToplam += enBuyukUcSayi[k];
+            }
+            Console.WriteLine("En büyük sayılar:" + 
+            enBuyukUcSayi[0] + "," + enBuyukUcSayi[1] + "," + enBuyukUcSayi[2]);
+
+
+            enKucuklerOrtalama = enKucuklerToplam/3;
+            Console.WriteLine("En kücük 3 sayının ortalaması: " + enKucuklerOrtalama);
+            enBuyuklerOrtalama = enBuyuklerToplam/3;
+            Console.WriteLine("En büyük 3 sayının ortalaması: " + enBuyuklerOrtalama);
+            Console.WriteLine("Ortalamalar toplamı: " +(enKucuklerOrtalama+enBuyuklerOrtalama));
+
+            
+        }
+    }
+}
+
+//3.Soru
+using System;
+using System.Collections;
+
+namespace degisken{
+
+    class Program{
+        static void Main(string[] args){
+            
+            ArrayList sesliHarfler = new ArrayList();
+
+            Console.Write("Metni giriniz: ");
+            string cumle = Console.ReadLine(); 
+            char[] cumleHarfleri = cumle.ToCharArray(); 
+            int elemanSayisi = cumleHarfleri.Count(); 
+            int[] ascii = new int[elemanSayisi];
+            
+            for(int i=0; i<elemanSayisi; i++){
+                ascii[i] = asciiCevir(cumleHarfleri[i]);
+            }
+           
+            for(int i=0; i<elemanSayisi; i++){
+                switch (ascii[i])
+                {   
+                    case 65:
+                    {
+                        sesliHarfler.Add(metineCevir(ascii[i]));
+                        break;
+                    }
+                    case 69:
+                    {
+                        sesliHarfler.Add(metineCevir(ascii[i]));
+                        break;
+                    }
+                    case 73:
+                    {
+                        sesliHarfler.Add(metineCevir(ascii[i]));
+                        break;
+                    }
+                    case 79:
+                    {
+                        sesliHarfler.Add(metineCevir(ascii[i]));
+                        break;
+                    }
+                    case 85:
+                    {
+                        sesliHarfler.Add(metineCevir(ascii[i]));
+                        break;
+                    }
+                    case 97:
+                    {
+                        sesliHarfler.Add(metineCevir(ascii[i]));
+                        break;
+                    }
+                    case 101:
+                    {
+                        sesliHarfler.Add(metineCevir(ascii[i]));
+                        break;
+                    }
+                    case 105:
+                    {
+                        sesliHarfler.Add(metineCevir(ascii[i]));
+                        break;
+                    }
+                    case 111:
+                    {
+                        sesliHarfler.Add(metineCevir(ascii[i]));
+                        break;
+                    }
+                    case 117:
+                    {
+                        sesliHarfler.Add(metineCevir(ascii[i]));
+                        break;
+                    }
+                    
+                    
+                }
+            }
+            
+            Console.WriteLine("Girdiginiz cumledeki sesli harfler:");
+            sesliHarfler.Sort();
+            foreach (var item in sesliHarfler)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine("\nHarfler ASCII degerlerine göre küçükten büyüğe sıralanmıştır");
+        }
+
+        public static int asciiCevir(char c){
+            int cevrilmis = c;
+            return cevrilmis;
+        }
+
+        public static char metineCevir(int i){
+            char cevrilmis = (char)i;
+            return cevrilmis;
+        }
+    
+    }
+}
